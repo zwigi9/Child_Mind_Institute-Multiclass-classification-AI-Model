@@ -24,7 +24,7 @@ plt.show()
 
 Saved to submission.csv
 tyyhf
-```bash
+
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -191,7 +191,7 @@ tyyhf
 </table>
 <p>5 rows × 82 columns</p>
 </div>
-```
+
 ```HTML
 	<iframe src="https://www.kaggle.com/embed/taimour/sparcepca-yeo-jhonson-eda-cmi-piu?cellIds=10&kernelSessionId=209757407" height="300" style="margin: 0 auto; width: 100%; max-width: 950px;" frameborder="0" scrolling="auto" title="💻 SparcePCA Yeo-Jhonson 📊 EDA | CMI PIU"></iframe>
 ```
