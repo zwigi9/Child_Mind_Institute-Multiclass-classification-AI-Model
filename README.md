@@ -19,9 +19,8 @@ plt.pie(vc.values, labels=labels, autopct="%1.1f%%")  # Add percentages to pie s
 plt.title('Season of Enrollment')
 plt.show()
 ```
-```bash
+
 ![image](https://github.com/user-attachments/assets/9705c7ae-cd3b-4777-bead-9eb636edb0c0)
 
-```
 Saved to submission.csv
 tyyhf
