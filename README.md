@@ -1,22 +1,18 @@
 # Project Name
 
-This project demonstrates Python code formatting in GitHub `README.md` files.
+This is an example of how to include Python code in a Markdown file for GitHub.
 
-## Python Example
+## Example Python Code
 
-Here’s a sample Python code block:
-
-```python
+/```python
+# Start of the Python code block
 import numpy as np
-import matplotlib.pyplot as plt
 
-# Generate data
+# Generate an array of numbers
 x = np.linspace(0, 10, 100)
-y = np.sin(x)
+print(x)
+# End of the Python code block
+/'''python
 
-# Plot the data
-plt.plot(x, y)
-plt.title("Sine Wave")
-plt.xlabel("x")
-plt.ylabel("sin(x)")
-plt.show()
+
+tyyhf
