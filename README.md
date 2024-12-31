@@ -1,4 +1,4 @@
-# 🏆📖Predicting Problematic Internet Usage Based on Physical Activity
+# 🏆📖*Predicting Problematic Internet Usage Based on Physical Activity*
 
 Welcome to our GitHub repository for the "Predicting Problematic Internet Usage" competition! This project aims to address a growing concern in today’s digital age—problematic internet use among children and adolescents. By leveraging physical activity and fitness data, we strive to build a predictive model capable of identifying early signs of problematic internet behavior.
 
@@ -35,3 +35,15 @@ This competition utilizes data provided by the **Healthy Brain Network**, a ment
 Special thanks to our sponsors, the **Child Mind Institute**, **Dell Technologies**, and **NVIDIA**, for their support in making this competition possible. By contributing to this challenge, you are helping pave the way for healthier digital habits and a brighter future for children and adolescents worldwide.
 
 We are excited to see the innovative solutions this community will develop! Together, let’s tackle this pressing issue and create meaningful change.
+
+# 📊🔍*Exploratory Data Analysis*
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7f56ae4f-ca94-4a85-a51f-7eeb20c88d7a">
+</p>
+
+  **It appears that the enrollment is nearly the same across all seasons.**
+
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6a8b4bc1-979d-4dd7-a68d-601fbd1a8662">
+</p>
