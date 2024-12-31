@@ -32,3 +32,5 @@ tyyhf
 3	2	9	0	2	71.0	1	18.292347	56.0	81.6	NaN	...	15.000000	4147.000000	1.507865	1.666354	1.546979	4.004276	89.751656	0.000000	2633.250000	4188.5
 5	3	13	1	0	50.0	1	22.279952	59.5	112.2	NaN	...	10.036485	4073.833252	1.034351	1.946303	1.146284	2.952888	89.476036	0.994444	2597.800049	4175.0
 ```
+<iframe src="https://www.kaggle.com/embed/taimour/sparcepca-yeo-jhonson-eda-cmi-piu?cellIds=10&kernelSessionId=209757407" height="300" style="margin: 0 auto; width: 100%; max-width: 950px;" frameborder="0" scrolling="auto" title="💻 SparcePCA Yeo-Jhonson 📊 EDA | CMI PIU"></iframe>
+
