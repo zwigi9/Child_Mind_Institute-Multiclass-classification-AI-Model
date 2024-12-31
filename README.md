@@ -19,26 +19,10 @@ plt.pie(vc.values, labels=labels, autopct="%1.1f%%")  # Add percentages to pie s
 plt.title('Season of Enrollment')
 plt.show()
 ```
-
-![image](https://github.com/user-attachments/assets/9705c7ae-cd3b-4777-bead-9eb636edb0c0)
-
 Saved to submission.csv
 tyyhf
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -192,6 +176,3 @@ tyyhf
 <p>5 rows × 82 columns</p>
 </div>
 
-```HTML
-	<iframe src="https://www.kaggle.com/embed/taimour/sparcepca-yeo-jhonson-eda-cmi-piu?cellIds=10&kernelSessionId=209757407" height="300" style="margin: 0 auto; width: 100%; max-width: 950px;" frameborder="0" scrolling="auto" title="💻 SparcePCA Yeo-Jhonson 📊 EDA | CMI PIU"></iframe>
-```
