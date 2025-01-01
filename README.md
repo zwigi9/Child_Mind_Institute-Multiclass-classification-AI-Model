@@ -153,3 +153,49 @@ train[categorical_cols] = categorical_imputer.fit_transform(train[categorical_co
 </p>
 
 So, we decided on predicting missing classes with regressor. First we separated rows with and without missing 'sii'. 
+
+
+```python
+# Step 3: Separate rows with missing 'sii' and not missing 'sii'
+train_no_missing_sii = train[train['sii'].notnull()]
+train_missing_sii = train[train['sii'].isnull()]
+
+# Step 4: Preprocess categorical features with one-hot encoding
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numerical_imputer, numeric_cols),
+        ('cat', Pipeline(steps=[
+            ('imputer', categorical_imputer),
+            ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
+        ]), categorical_cols)
+    ])
+
+# Step 5: Train a model to predict missing 'sii' values using other features X - features Y - target
+X_train_no_missing = train_no_missing_sii[X_train.columns]
+y_train_no_missing = train_no_missing_sii['sii']
+
+# Preprocess the data
+X_train_no_missing_processed = preprocessor.fit_transform(X_train_no_missing)
+
+# Train a Random Forest Regressor
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train_no_missing_processed, y_train_no_missing)
+
+# Step 6: Predict missing 'sii' values
+X_train_missing = train_missing_sii[X_train.columns]
+X_train_missing_processed = preprocessor.transform(X_train_missing)
+predicted_sii = model.predict(X_train_missing_processed)
+
+# Step 7: Impute the missing 'sii' values with the predictions
+train.loc[train['sii'].isnull(), 'sii'] = predicted_sii
+
+# Step 8: Check missing values after imputation
+print("\nMissing values after imputation:")
+print(train.isnull().sum())
+
+# Evaluate the model performance using Mean Squared Error (MSE)
+X_train_no_missing_processed = preprocessor.transform(X_train_no_missing)
+y_pred = model.predict(X_train_no_missing_processed)
+mse = mean_squared_error(y_train_no_missing, y_pred)
+print(f"\nMean Squared Error on training set: {mse}")
+```
