@@ -155,7 +155,7 @@ Our first target was to make it work, just to have some reference for the future
 
 ## Handling missing features
 
-We started with dropping some unnecessery columns, which were: id, sii(target column) and Physical-Waist_Circumference (because it was mostly empty, more than 60%). Then we split the rest into numerical and categorical columns. After that we used SimpleImputer to handle missing data. For the numerical columns it was imputed with 'median' value. And for the categorical columns we used 'most_frequent' value. 
+We started with dropping some unnecessery columns, which were: `id`, `sii`(target column) and `Physical-Waist_Circumference` (because it was mostly empty, more than 60%). Then we split the rest into numerical and categorical columns. After that we used SimpleImputer to handle missing data. For the numerical columns it was imputed with `median` value. And for the categorical columns we used `most_frequent` value. 
 
 ```python
 # Step 1.1: Split the training data into features (X) and target (y)
@@ -185,9 +185,9 @@ train[categorical_cols] = categorical_imputer.fit_transform(train[categorical_co
   <img src="https://github.com/user-attachments/assets/c9c942f3-17f4-4bea-b1eb-50887183bab3">
 </p>
 
-So, we decided on predicting missing classes with regressor. First, we separated rows with and without missing 'sii'. Then we defined a preprocessor to encode categorical features using One-Hot Encoder (OHE) before training. We used this encoder instead of a simpler Label Encoder (LE), because LE can introduce unintended ordinal relationships for nominal data. In our case where every categorical feature is connected to the four seasons we didn't want it to have some sort of a hierarchical order. On the other hand, OHE creates binary columns for each category (no inherent order).
+So, we decided on predicting missing classes with regressor. First, we separated rows with and without missing `sii`. Then we defined a preprocessor to encode categorical features using One-Hot Encoder (OHE) before training. We used this encoder instead of a simpler Label Encoder (LE), because LE can introduce unintended ordinal relationships for nominal data. In our case where every categorical feature is connected to the four seasons we didn't want it to have some sort of a hierarchical order. On the other hand, OHE creates binary columns for each category (no inherent order).
 
-After that, we split the train_no_missing into features (X) and target (y). Next, we preprocessed the data and trained the Random Forest Regressor. Subsequently, we predicted the missing 'sii' values and imputed these predictions into our main Data Frame. Lastly, we checked if all values where imputed correctly and did some basic model evaluation using Mean Squared Error (MSE).
+After that, we split the `train_no_missing` into features (X) and target (y). Next, we preprocessed the data and trained the Random Forest Regressor. Subsequently, we predicted the missing `sii` values and imputed these predictions into our main Data Frame. Lastly, we checked if all values where imputed correctly and did some basic model evaluation using `Mean Squared Error` (MSE).
 
 ```python
 # Step 3: Separate rows with missing 'sii' and not missing 'sii'
