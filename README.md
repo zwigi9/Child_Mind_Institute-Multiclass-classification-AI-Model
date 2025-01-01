@@ -200,3 +200,21 @@ y_pred = model.predict(X_train_no_missing_processed)
 mse = mean_squared_error(y_train_no_missing, y_pred)
 print(f"\nMean Squared Error on training set: {mse}")
 ```
+**Console output:**
+```bash
+Missing values after imputation:
+id                                        0
+Basic_Demos-Enroll_Season                 0
+Basic_Demos-Age                           0
+Basic_Demos-Sex                           0
+CGAS-Season                               0
+                                         ..
+SDS-SDS_Total_Raw                         0
+SDS-SDS_Total_T                           0
+PreInt_EduHx-Season                       0
+PreInt_EduHx-computerinternet_hoursday    0
+sii                                       0
+Length: 82, dtype: int64
+
+Mean Squared Error on training set: 1.7543859649122841e-06
+```
