@@ -115,3 +115,29 @@ Special thanks to our sponsors, the **Child Mind Institute**, **Dell Technologie
 **1. There may be some discrepancy or error in the measurement of BMI.**
 
 **2. The two BMIs could have been calculated at different ages for the same individual.**
+
+# Our first attempt
+
+Our first target was to make it work, just to have some reference for the future. We started with dropping some unnecessery columns, which were: id, sii(target column) and Physical-Waist_Circumference (because it was mostly empty, more than 60%). Then we split the rest into numerical and categorical columns. After that we used SimpleImputer to handle missing data. For the numerical columns it was imputed with 'median' value. And for the categorical columns we used 'most_frequent' value. 
+
+```python
+# Step 1.1: Split the training data into features (X) and target (y)
+X_train = train.drop(columns=['id', 'Physical-Waist_Circumference', 'sii'])  # Omit 'id', 'Physical-Waist_Circumference', 'sii'
+y_train = train['sii']  # Our target is 'sii'
+
+# Step 1.2: Split the testing data into features (X)
+X_test = test.drop(columns=['id', 'Physical-Waist_Circumference']) # Omit 'id', 'Physical-Waist_Circumference',
+
+# Step 2: Split the features into numerical and categorical based on data type
+numeric_cols = X_train.select_dtypes(include=['int64', 'float64']).columns
+categorical_cols = X_train.select_dtypes(include=['object']).columns
+
+# Step 2.1:Impute numerical columns with median value
+numerical_imputer = SimpleImputer(strategy='median')
+train[numeric_cols] = numerical_imputer.fit_transform(train[numeric_cols])
+
+# Step 2.2:Impute categorical columns with the most frequent value
+categorical_imputer = SimpleImputer(strategy='most_frequent')
+train[categorical_cols] = categorical_imputer.fit_transform(train[categorical_cols])
+```
+
