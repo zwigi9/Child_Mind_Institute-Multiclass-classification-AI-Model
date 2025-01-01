@@ -152,8 +152,7 @@ train[categorical_cols] = categorical_imputer.fit_transform(train[categorical_co
   <img src="https://github.com/user-attachments/assets/c9c942f3-17f4-4bea-b1eb-50887183bab3">
 </p>
 
-So, we decided on predicting missing classes with regressor. First we separated rows with and without missing 'sii'. 
-
+So, we decided on predicting missing classes with regressor. First we separated rows with and without missing 'sii'. After that we defined a preprocessor to encode categorical features before training. Then we split the train_no_missing into features (X) and target (y). Next we preprocessed the data and trained the Random Forest Regressor. Subsequently we predicted the missing 'sii' values and imputed these predictions into our main Data Frame. Lastly, we checked if all values where imputed correctly and did some basic model evaluation using Mean Squared Error (MSE).
 
 ```python
 # Step 3: Separate rows with missing 'sii' and not missing 'sii'
@@ -170,7 +169,7 @@ preprocessor = ColumnTransformer(
         ]), categorical_cols)
     ])
 
-# Step 5: Train a model to predict missing 'sii' values using other features X - features Y - target
+# Step 5: Split the train_no_missing into features (X) and target (y)
 X_train_no_missing = train_no_missing_sii[X_train.columns]
 y_train_no_missing = train_no_missing_sii['sii']
 
