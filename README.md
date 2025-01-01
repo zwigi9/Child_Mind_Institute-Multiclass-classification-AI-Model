@@ -140,4 +140,8 @@ train[numeric_cols] = numerical_imputer.fit_transform(train[numeric_cols])
 categorical_imputer = SimpleImputer(strategy='most_frequent')
 train[categorical_cols] = categorical_imputer.fit_transform(train[categorical_cols])
 ```
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c9c942f3-17f4-4bea-b1eb-50887183bab3">
+</p>
+
 
