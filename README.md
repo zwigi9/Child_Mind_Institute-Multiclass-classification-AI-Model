@@ -118,7 +118,11 @@ Special thanks to our sponsors, the **Child Mind Institute**, **Dell Technologie
 
 # Our first attempt
 
-Our first target was to make it work, just to have some reference for the future. We started with dropping some unnecessery columns, which were: id, sii(target column) and Physical-Waist_Circumference (because it was mostly empty, more than 60%). Then we split the rest into numerical and categorical columns. After that we used SimpleImputer to handle missing data. For the numerical columns it was imputed with 'median' value. And for the categorical columns we used 'most_frequent' value. 
+Our first target was to make it work, just to have some reference for the future. 
+
+## Handling missing features
+
+We started with dropping some unnecessery columns, which were: id, sii(target column) and Physical-Waist_Circumference (because it was mostly empty, more than 60%). Then we split the rest into numerical and categorical columns. After that we used SimpleImputer to handle missing data. For the numerical columns it was imputed with 'median' value. And for the categorical columns we used 'most_frequent' value. 
 
 ```python
 # Step 1.1: Split the training data into features (X) and target (y)
@@ -140,8 +144,12 @@ train[numeric_cols] = numerical_imputer.fit_transform(train[numeric_cols])
 categorical_imputer = SimpleImputer(strategy='most_frequent')
 train[categorical_cols] = categorical_imputer.fit_transform(train[categorical_cols])
 ```
+## Handling missing classes in target column with regressor
+
+**We found out that there is a lot of missing classes in target column, around 30%.**
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/c9c942f3-17f4-4bea-b1eb-50887183bab3">
 </p>
 
-
+So, we decided on predicting missing classes with regressor. First we separated rows with and without missing 'sii'. 
