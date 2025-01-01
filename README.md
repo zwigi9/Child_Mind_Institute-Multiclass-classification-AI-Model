@@ -51,17 +51,17 @@ Special thanks to our sponsors, the **Child Mind Institute**, **Dell Technologie
 
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/92eab349-809b-4651-ad63-61fbaae5d9b0">
-</p>
-
-**The pie chart clearly shows that the majority of people, 58.3%, have no problems, while 26.7% experience only mild issues. This means that 85% of individuals in our dataset have either no problems or mild ones. In contrast, 15% of the population falls into more serious categories, with 13.8% having moderate problems and only 1.2% displaying severe issues. Therefore, in our dataset, only 1.2% of people have a severe problem, which is a very small percentage compared to the other three groups.**
-
-
-<p align="center">
   <img src="https://github.com/user-attachments/assets/020cc65e-b6a7-481a-b308-f3bc73455d59">
 </p>
 
 **The pie chart above clearly shows that only 9.9% of people use the internet excessively, while the rest of the users either spend around 2 hours or less online.**
+
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/92eab349-809b-4651-ad63-61fbaae5d9b0">
+</p>
+
+**The pie chart clearly shows that the majority of people, 58.3%, have no problems, while 26.7% experience only mild issues. This means that 85% of individuals in our dataset have either no problems or mild ones. In contrast, 15% of the population falls into more serious categories, with 13.8% having moderate problems and only 1.2% displaying severe issues. Therefore, in our dataset, only 1.2% of people have a severe problem, which is a very small percentage compared to the other three groups.**
 
 
 <p align="center">
