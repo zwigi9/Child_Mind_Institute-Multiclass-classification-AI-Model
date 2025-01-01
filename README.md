@@ -25,10 +25,43 @@ Traditional methods of measuring problematic internet use often involve complex 
 
 ## Data Source
 
-This competition utilizes data provided by the **Healthy Brain Network**, a mental health study conducted by the Child Mind Institute. This initiative is supported by the California Department of Health Care Services and sponsors like Dell Technologies and NVIDIA. The dataset includes valuable indicators such as:
-- Accelerometer measures (e.g., X, Y, Z acceleration, and derived metrics like ENMO)
-- Light exposure and time-of-day patterns
-- Demographic and contextual features
+This competition utilizes data provided by the **Healthy Brain Network**, a mental health study conducted by the Child Mind Institute. This initiative is supported by the California Department of Health Care Services.
+The dataset contains data from around 5,000 participants aged 5-22 years, focusing on identifying biological markers for mental health and learning disorders. This competition uses two data types:  
+1. **Physical Activity Data**: Wrist-worn accelerometer readings, fitness assessments, and activity questionnaires.  
+2. **Internet Usage Data**: Behavioral data related to internet use.  
+
+The goal is to predict the **Severity Impairment Index (SII)**, which measures problematic internet use on a scale from 0 (None) to 3 (Severe).  
+
+### Data Structure  
+- **Accelerometer Data**: Stored in Parquet files (`series_train.parquet` and `series_test.parquet`), capturing time-series data for each participant over multiple days.  
+- **Tabular Data**: Stored in CSV files (`train.csv` and `test.csv`) and includes demographic, fitness, health, and internet usage data. Field descriptions are in `data_dictionary.csv`.  
+
+### Key Features  
+- **Accelerometer Fields**:  
+  - `X`, `Y`, `Z`: Acceleration along each axis.  
+  - `enmo`: Euclidean Norm Minus One, representing overall movement.  
+  - `anglez`: Arm angle relative to the horizontal plane.  
+  - `non-wear_flag`: Indicates if the device was worn (0: watch is being worn, 1: the watch is not worn).
+  - `light`: Ambient light in lux.  
+  - `time_of_day`, `weekday`, `quarter`: Contextual time details.  
+  - `relative_date_PCIAT`: Days since the PCIAT test.  
+
+- **Instruments Summary**:
+
+  - `Demographics`: Age and sex of participants.  
+  - `Internet Use`: Daily hours spent on computers or the internet.  
+  - `Children's Global Assessment Scale`: Rates general functioning of youths under 18.  
+  - `Physical Measures`: Includes blood pressure, heart rate, height, weight, waist, and hip measurements.  
+  - `FitnessGram Vitals & Treadmill`: Cardiovascular fitness via NHANES treadmill protocol.  
+  - `FitnessGram Child`: Assesses aerobic capacity, muscular strength, endurance, flexibility, and body composition.  
+  - `Bio-electric Impedance Analysis`: Measures BMI, fat, muscle, and water content.  
+  - `Physical Activity Questionnaire`: Tracks participation in vigorous activities over the past week.  
+  - `Sleep Disturbance Scale`: Categorizes sleep disorders in children.  
+  - `Parent-Child Internet Addiction Test (PCIAT)`: Evaluates compulsive internet behaviors like escapism and dependency.  
+
+### Additional Details  
+- **Missing Data**: Many fields are missing for some participants, including the target SII in parts of the training set.  
+- **Test Set**: The test set (hidden during the competition) contains around 3,800 instances, with complete SII values.  
 
 ## Acknowledgments
 
