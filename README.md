@@ -251,7 +251,7 @@ Length: 82, dtype: int64
 
 Mean Squared Error on training set: 1.7543859649122841e-06
 ```
-We started by identifying common columns in train and test data sets, because test data set didn't have all of them. Then we updated the `numeric_cols` and `categorical_cols` variables so they only contained the common columns. After that, to avoid unnecessary errors, we had to define preprocessor one more time. Then, we preprocessed both the training and test data and trained the model with a simple `RandomForestClassifier`. Lastly, we predicted using the trained model on the preprocessed test data and save the results to submission.csv.
+We started by identifying common columns in train and test data sets, because test data set didn't have all of them. Then we updated the `numeric_cols` and `categorical_cols` variables so they only contained the common columns. After that, to avoid unnecessary errors, we had to define preprocessor one more time. Then, we preprocessed both the training and test data and trained the model with a simple `RandomForestClassifier`. Lastly, we predicted using the trained model on the preprocessed test data and save the results to `submission.csv`.
 
 ```python
 # Step 9: Identify common columns
