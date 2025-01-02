@@ -185,7 +185,7 @@ train[categorical_cols] = categorical_imputer.fit_transform(train[categorical_co
   <img src="https://github.com/user-attachments/assets/c9c942f3-17f4-4bea-b1eb-50887183bab3">
 </p>
 
-So, we decided on predicting missing classes with regressor. First, we separated rows with and without missing `sii`. Then we defined a preprocessor to encode categorical features using One-Hot Encoder (OHE) before training. We used this encoder instead of a simpler Label Encoder (LE), because LE can introduce unintended ordinal relationships for nominal data. In our case where every categorical feature is connected to the four seasons we didn't want it to have some sort of a hierarchical order. On the other hand, OHE creates binary columns for each category (no inherent order).
+So, we decided on predicting missing classes with regressor. First, we separated rows with and without missing `sii`. Then we defined a preprocessor to encode categorical features using `One-Hot Encoder` (OHE) before training. We used this encoder instead of a simpler `Label Encoder` (LE), because LE can introduce unintended ordinal relationships for nominal data. In our case where every categorical feature is connected to the four seasons we didn't want it to have some sort of a hierarchical order. On the other hand, OHE creates binary columns for each category (no inherent order).
 
 After that, we split the `train_no_missing` into features (X) and target (y). Next, we preprocessed the data and trained the Random Forest Regressor. Subsequently, we predicted the missing `sii` values and imputed these predictions into our main Data Frame. Lastly, we checked if all values where imputed correctly and did some basic model evaluation using `Mean Squared Error` (MSE).
 
@@ -250,4 +250,45 @@ sii                                       0
 Length: 82, dtype: int64
 
 Mean Squared Error on training set: 1.7543859649122841e-06
+```
+We started by identifying common columns in train and test data sets, because test data set didn't have all of them. Then we updated the `numeric_cols` and `categorical_cols` variables so they only contained the common columns. After that, to avoid unnecessary errors, we had to define preprocessor one more time. Then, we preprocessed both the training and test data and trained the model with a simple `RandomForestClassifier`. Lastly, we predicted using the trained model on the preprocessed test data and save the results to submission.csv.
+
+```python
+# Step 9: Identify common columns
+common_cols = X_train.columns.intersection(X_test.columns)
+
+# Step 10: Handle numeric and categorical columns separately
+numeric_cols = X_train.select_dtypes(include=['int64', 'float64']).columns.intersection(common_cols)
+categorical_cols = X_train.select_dtypes(include=['object']).columns.intersection(common_cols)
+
+# For categorical features, apply one-hot encoding
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numerical_imputer, numeric_cols),
+        ('cat', Pipeline(steps=[
+            ('imputer', categorical_imputer),
+            ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False)) 
+        ]), categorical_cols)
+    ])
+
+# Step 11: Preprocess both the training and test data
+X_train_preprocessed = preprocessor.fit_transform(X_train[common_cols])
+X_test_preprocessed = preprocessor.transform(X_test[common_cols])
+
+# Step 12: Train the model
+model = RandomForestClassifier(random_state=42)
+model.fit(X_train_preprocessed, y_train)
+
+# Step 13: Predict using the trained model on the preprocessed test data
+predictions = model.predict(X_test_preprocessed)
+
+# Step 24: Prepare submission file
+submission = pd.DataFrame({
+    'id': test['id'],  # Assuming 'id' is the column in test.csv
+    'sii': predictions.astype(int)  # Ensure predictions are integers (for classification)
+})
+
+# Step 25: Save to submission.csv
+submission.to_csv('submission.csv', index=False)
+print('Saved to submission.csv')
 ```
