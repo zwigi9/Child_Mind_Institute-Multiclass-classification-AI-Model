@@ -292,3 +292,7 @@ submission = pd.DataFrame({
 submission.to_csv('submission.csv', index=False)
 print('Saved to submission.csv')
 ```
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/bd21c9f3-eef9-4e44-b97f-534adbda267d">
+</p>
