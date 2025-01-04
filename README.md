@@ -303,16 +303,18 @@ print('Saved to submission.csv')
 </table>
 
 
-# Further Anal(ysis)
-
+# Further Testing
+## Feature Importance Anal(ysis)
 After our successful first attempt we wanted to test if we need to use all the columns, so we created a feature importance plot to determine which ones are most important for our model.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/eae8fe31-d202-457b-a598-3620afa86f1e">
 </p>
 
-According to this plot all of the categorical data (Seasonal data) was irrelevant. For a long time we'd used top 15 features from this plot. But when we used feature importance plot again, this time on our best performing model, the results quit differed.
+According to this plot all of the categorical data (Seasonal data) was irrelevant. For a long time we'd used top 15 features from this plot. But when we used feature importance plot again, this time on our best performing model, the results quite differed.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/bd21c9f3-eef9-4e44-b97f-534adbda267d">
 </p>
+
+Using the last plot as reference we finally ended up using following columns: `Physical-Height`, `Physical-Weight`, `Basic_Demos-Age`, `SDS-SDS_Total_Raw`, `Physical-BMI`, `SDS-SDS_Total_T`, `Physical-Systolic_BP`, `Physical-HeartRate`, `CGAS-CGAS_Score`, `PreInt_EduHx-computerinternet_hoursday`, `Basic_Demos-Sex`, `Physical-Diastolic_BP`, `PAQ_Total`.
