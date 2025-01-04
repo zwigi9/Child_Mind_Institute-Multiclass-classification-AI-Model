@@ -304,6 +304,7 @@ print('Saved to submission.csv')
 
 
 # Further Testing
+
 ## Feature Importance Anal(ysis)
 After our successful first attempt we wanted to test if we need to use all the columns, so we created a feature importance plot to determine which ones are most important for our model.
 
@@ -318,3 +319,7 @@ According to this plot all of the categorical data (Seasonal data) was irrelevan
 </p>
 
 Using the last plot as reference we finally ended up using following columns: `Physical-Height`, `Physical-Weight`, `Basic_Demos-Age`, `SDS-SDS_Total_Raw`, `Physical-BMI`, `SDS-SDS_Total_T`, `Physical-Systolic_BP`, `Physical-HeartRate`, `CGAS-CGAS_Score`, `PreInt_EduHx-computerinternet_hoursday`, `Basic_Demos-Sex`, `Physical-Diastolic_BP`, `PAQ_Total`.
+
+## How to Handle 'sii' - Handling missing classes in target column. Part 2
+
+[Here]()
