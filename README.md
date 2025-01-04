@@ -293,6 +293,26 @@ submission.to_csv('submission.csv', index=False)
 print('Saved to submission.csv')
 ```
 
+<table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
+  <tr>
+    <td style="text-align: center; font-family: Arial, sans-serif; font-size: 50;">
+      <img src="https://github.com/user-attachments/assets/7e141746-d572-4e52-96cf-31a1f01f3a97" alt="Icon" style="width: 20px; vertical-align: down; margin-right: 10px;">
+      <b>Current Kaggle Score: 0.186</b>
+    </td>
+  </tr>
+</table>
+
+
+# Further Anal(ysis)
+
+After our successful first attempt we wanted to test if we need to use all the columns, so we created a feature importance plot to determine which ones are most important for our model.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/eae8fe31-d202-457b-a598-3620afa86f1e">
+</p>
+
+According to this plot all of the categorical data (Seasonal data) was irrelevant. For a long time we'd used top 15 features from this plot. But when we used feature importance plot again, this time on our best performing model, the results quit differed.
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/bd21c9f3-eef9-4e44-b97f-534adbda267d">
 </p>
