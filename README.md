@@ -322,4 +322,4 @@ Using the last plot as reference we finally ended up using following columns: `P
 
 ## How to Handle 'sii' - Handling missing classes in target column. Part 2
 
-[Here]()
+[Here](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/blob/main/README.md#handling-missing-classes-in-target-column-with-regressor)
