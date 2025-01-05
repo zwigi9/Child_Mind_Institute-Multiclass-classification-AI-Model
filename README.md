@@ -323,3 +323,48 @@ Using the last plot as reference we finally ended up using following columns: `P
 ## How to Handle 'sii' - Handling missing classes in target column. Part 2
 Initially, in our first attempt, we used a `RandomForestRegressor` to impute missing values in the target column `sii` ([here](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/blob/main/README.md#handling-missing-classes-in-target-column-with-regressor)). Later, we considered an alternative approach: simply removing rows with missing `sii` values. After conducting several tests using the same model but handling the missing `sii` differently, we found that the best-performing method was to delete these rows. This approach proved effective, and we stuck to it for the remainder of the project.
 
+## Parquet Files Adventures
+At first, we struggled with loading the Parquet files because the basic pandas functions couldn’t handle their large size within Kaggle’s runtime limits. After building a few simple models, we revisited the problem and searched online for solutions. We found a code snippet that appeared in multiple competition notebooks, offering a better way to process the time series data in Parquet format.
+
+The snippet introduces a function, `load_time_series`, designed to efficiently handle Parquet files in a directory. It uses `os.listdir` to get the file names and `ThreadPoolExecutor` to process multiple files at the same time. Each file is passed to a helper function, `process_file`, which reads the Parquet file, removes the `step` column, and calculates summary statistics using `df.describe()`. These statistics include useful details about the data, such as how many values are present (count), the average (mean), how spread out the data is (standard deviation), and key percentiles (minimum, 25%, 50%, 75%, and maximum). These numbers give a quick but detailed picture of the data in each file. The statistics are flattened into a single row, and the file ID is extracted from the file name and included with the results.
+
+The `load_time_series` function combines these rows into a DataFrame, where each column represents one of the statistics, and an `id` column identifies which file the data came from. This approach makes it much faster and easier to work with the time series data, as it turns large, complex datasets into compact summaries that are ready for modeling.
+
+The resulting DataFrames are then merged with the main datasets (`train.csv`, `test.csv`) using the `id` column to match them. Once merged, the `id` column is no longer needed and is dropped, leaving the data clean and ready for analysis.
+
+```python
+import pandas as pd
+import os
+from concurrent.futures import ThreadPoolExecutor
+from tqdm import tqdm
+
+def process_file(filename, dirname):
+    df = pd.read_parquet(os.path.join(dirname, filename, 'part-0.parquet'))
+    df.drop('step', axis=1, inplace=True)
+    return df.describe().values.reshape(-1), filename.split('=')[1]
+
+def load_time_series(dirname) -> pd.DataFrame:
+    ids = os.listdir(dirname)
+
+    with ThreadPoolExecutor() as executor:
+        results = list(tqdm(executor.map(lambda fname: process_file(fname, dirname), ids), total=len(ids)))
+            
+    stats, indexes = zip(*results)
+
+    df = pd.DataFrame(stats, columns=[f"Stat_{i}" for i in range(len(stats[0]))])
+    df['id'] = indexes
+
+    return df
+
+train_parquet_path = "series_train.parquet"
+test_parquet_path = "series_test.parquet"
+
+train_ts = load_time_series(train_parquet_path)
+test_ts = load_time_series(test_parquet_path)
+
+time_series_cols = train_ts.columns.tolist()
+time_series_cols.remove("id")
+
+train = pd.merge(train, train_ts, how="left", on='id')
+test = pd.merge(test, test_ts, how="left", on='id')
+```
