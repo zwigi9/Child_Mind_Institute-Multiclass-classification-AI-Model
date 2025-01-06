@@ -324,6 +324,7 @@ Using the last plot as reference we finally ended up using following columns: `P
 Initially, in our first attempt, we used a `RandomForestRegressor` to impute missing values in the target column `sii` ([here](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/blob/main/README.md#handling-missing-classes-in-target-column-with-regressor)). Later, we considered an alternative approach: simply removing rows with missing `sii` values. After conducting several tests using the same model but handling the missing `sii` differently, we found that the best-performing method was to delete these rows. This approach proved effective, and we stuck to it for the remainder of the project.
 
 ## Parquet Files Adventures
+### First Version
 At first, we struggled with loading the Parquet files because the basic pandas functions couldn’t handle their large size within Kaggle’s runtime limits. After building a few simple models, we revisited the problem and searched online for solutions. We found a code snippet that appeared in multiple competition notebooks, offering a better way to process the time series data in Parquet format.
 
 The snippet introduces a function, `load_time_series`, designed to efficiently handle Parquet files in a directory. It uses `os.listdir` to get the file names and `ThreadPoolExecutor` to process multiple files at the same time. Each file is passed to a helper function, `process_file`, which reads the Parquet file, removes the `step` column, and calculates summary statistics using `df.describe()`. These statistics include useful details about the data, such as how many values are present (count), the average (mean), how spread out the data is (standard deviation), and key percentiles (minimum, 25%, 50%, 75%, and maximum). These numbers give a quick but detailed picture of the data in each file. The statistics are flattened into a single row, and the file ID is extracted from the file name and included with the results.
@@ -368,3 +369,13 @@ time_series_cols.remove("id")
 train = pd.merge(train, train_ts, how="left", on='id')
 test = pd.merge(test, test_ts, how="left", on='id')
 ```
+<table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
+  <tr>
+    <td style="text-align: center; font-family: Arial, sans-serif; font-size: 50;">
+      <img src="https://github.com/user-attachments/assets/7e141746-d572-4e52-96cf-31a1f01f3a97" alt="Icon" style="width: 20px; vertical-align: down; margin-right: 10px;">
+      <b>Current Kaggle Score: 0.162</b>
+    </td>
+  </tr>
+</table>
+
+**This version uses code from the First Attempt + First Version of parquet handling**
