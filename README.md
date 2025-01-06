@@ -412,7 +412,7 @@ test = pd.merge(test, test_ts, how="left", on='id')
   <tr>
     <td style="text-align: center; font-family: Arial, sans-serif; font-size: 50;">
       <img src="https://github.com/user-attachments/assets/7e141746-d572-4e52-96cf-31a1f01f3a97" alt="Icon" style="width: 20px; vertical-align: down; margin-right: 10px;">
-      <b>Final Kaggle Score: NaN</b>
+      <b>Final Kaggle Score: 0.402</b>
     </td>
   </tr>
 </table>
