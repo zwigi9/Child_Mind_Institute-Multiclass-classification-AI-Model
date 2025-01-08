@@ -1,6 +1,6 @@
 # 🏆📖*Predicting Problematic Internet Usage Based on Physical Activity*
 
-Welcome to our GitHub repository for the "Predicting Problematic Internet Usage" competition! This project aims to address a growing concern in today’s digital age—problematic internet use among children and adolescents. By leveraging physical activity and fitness data, we strive to build a predictive model capable of identifying early signs of problematic internet behavior.
+Welcome to our GitHub repository for the "Predicting Problematic Internet Usage" competition! This project aims to address a growing concern in today’s digital age — problematic internet use among children and adolescents. By leveraging physical activity and fitness data, we strive to build a predictive model capable of identifying early signs of problematic internet behavior.
 
 ## Competition Overview
 
