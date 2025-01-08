@@ -305,7 +305,7 @@ print('Saved to submission.csv')
 
 # Further Testing
 
-## Feature Importance Anal(ysis)
+## Feature Importance Analysis
 After our successful first attempt we wanted to test if we need to use all the columns, so we created a feature importance plot to determine which ones are most important for our model.
 
 <p align="center">
