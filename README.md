@@ -149,7 +149,7 @@ Special thanks to our sponsors, the **Child Mind Institute**, **Dell Technologie
 
 **2. The two BMIs could have been calculated at different ages for the same individual.**
 
-# Our First Attempt
+# 1️⃣⚒Our First Attempt
 
 Our first target was to make it work, just to have some reference for the future. 
 
@@ -303,7 +303,7 @@ print('Saved to submission.csv')
 </table>
 
 
-# Further Testing
+# 🧪🔬Further Testing
 
 ## Feature Importance Analysis
 After our successful first attempt we wanted to test if we need to use all the columns, so we created a feature importance plot to determine which ones are most important for our model.
@@ -406,7 +406,7 @@ test = pd.merge(test, test_ts, how="left", on='id')
 
 **This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/edit/main/README.md#our-first-attempt) + Third Method (this one) of parquet handling.**
 
-# Our Best and Final Attempt TBC
+# 🥇🗿Our Best and Final Attempt TBC
 
 <table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
   <tr>
