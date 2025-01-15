@@ -10,19 +10,7 @@ The goal of this competition is to analyze children’s physical activity data a
 
 Traditional methods of measuring problematic internet use often involve complex clinical assessments, which can be inaccessible due to cultural, linguistic, or logistical barriers. On the other hand, physical activity and fitness data are widely available and require minimal intervention, making them ideal proxies for identifying problematic internet use. Excessive technology use often manifests through changes in physical behavior, such as reduced activity levels and poorer posture. By harnessing these indicators, we aim to create scalable solutions to this growing problem.
 
-## Competition Details
-
-- **Start Date:** September 19, 2024
-- **Entry Deadline:** December 12, 2024
-- **Team Merger Deadline:** December 12, 2024
-- **Final Submission Deadline:** December 19, 2024
-
-### Prizes
-- **1st Place:** $15,000
-- **2nd Place:** $10,000
-- **3rd Place:** $8,000
-- **4th - 8th Places:** $5,000 each
-
+# 📊🔍*Data Overview*
 ## Data Source
 
 This competition utilizes data provided by the **Healthy Brain Network**, a mental health study conducted by the Child Mind Institute. This initiative is supported by the California Department of Health Care Services.
@@ -30,7 +18,7 @@ The dataset contains data from around 5,000 participants aged 5-22 years, focusi
 1. **Physical Activity Data**: Wrist-worn accelerometer readings, fitness assessments, and activity questionnaires.  
 2. **Internet Usage Data**: Behavioral data related to internet use.  
 
-The goal is to predict the **Severity Impairment Index (SII)**, which measures problematic internet use on a scale from 0 (None) to 3 (Severe).  
+The goal is to predict the **Severity Impairment Index (SII)**, which measures problematic internet use on a scale from 0 (None) to 3 (Severe). 
 
 ### Data Structure  
 - **Accelerometer Data**: Stored in Parquet files (`series_train.parquet` and `series_test.parquet`), capturing time-series data for each participant over multiple days.  
@@ -61,14 +49,10 @@ The goal is to predict the **Severity Impairment Index (SII)**, which measures p
 
 ### Additional Details  
 - **Missing Data**: Many fields are missing for some participants, including the target SII in parts of the training set.  
-- **Test Set**: The test set (hidden during the competition) contains around 3,800 instances, with complete SII values.  
+- **Test Set**: The test set (hidden during the competition) contains around 3,800 instances, with complete SII values.
 
-## Acknowledgments
+## **Data visualization and analysis**
 
-Special thanks to our sponsors, the **Child Mind Institute**, **Dell Technologies**, and **NVIDIA**, for their support in making this competition possible. By contributing to this challenge, you are helping pave the way for healthier digital habits and a brighter future for children and adolescents worldwide.
-
-
-# 📊🔍*Exploratory Data Analysis*
 <p align="center">
   <img src="https://github.com/user-attachments/assets/7f56ae4f-ca94-4a85-a51f-7eeb20c88d7a">
 </p>
