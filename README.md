@@ -1,25 +1,27 @@
 # 🏆📖*Multiclass classification problem with unbalanced dataset*
 
-### Introduction
+### ⭐ Introduction
 
 This project focused on solving a multiclass classification problem with an imbalanced dataset, predicting the Severity Impairment Index (SII) (0-3) for individuals based on physical activity and fitness data.
 
-- Goal: Predict SII scores to assess problematic internet usage impacts.
-- Data Handling: Utilized mixed-format datasets (CSV and Parquet), performed feature engineering, and addressed missing values and class imbalance using resampling (SMOTE-Tomek).
-- Modeling:
-  - Developed a custom ensemble approach, training Random Forest, XGBoost, and LightGBM classifiers.
+- 🎯 Goal: Predict SII scores to assess problematic internet usage impacts.
+- 📊 Data Handling: Utilized mixed-format datasets (`CSV` and `Parquet`), performed feature engineering, and addressed missing values and class imbalance using resampling (`SMOTE-Tomek`).
+- 🧠 Modeling:
+  - Developed a custom ensemble approach, training `Random Forest`, `XGBoost`, and `LightGBM` classifiers.
   - Applied class-specific model selection for optimal performance on individual SII categories.
-  - Evaluated models using Stratified K-Fold cross-validation and weighted F1-scores to ensure robustness.
-- Tools & Techniques:
-  - Designed an end-to-end data preprocessing pipeline using scikit-learn and imbalanced-learn.
+  - Evaluated models using `Stratified K-Fold` cross-validation and weighted `F1-scores` to ensure robustness.
+- 🛠 Tools, Libraries & Techniques:
+  - Designed an end-to-end data preprocessing pipeline using `scikit-learn`, `imbalanced-learn`, `pandas`, and `numpy`.
   - Leveraged time-series data preprocessing and feature selection tailored to the problem.
-  - Worked within a Kaggle competition framework, meeting runtime and hardware constraints.
+  - Created data visualizations and feature importance plots using `matplotlib` and `seaborn` to gain insights and enhance interpretability.
+  - Worked within a Kaggle competition framework, meeting runtime constraints.
 
-### This project enhanced our skills in:
+### 🎓 This project enhanced our skills in:
 
 - Tackling imbalanced classification problems and effectively applying resampling techniques.
 - Building and optimizing ensemble models for multiclass classification tasks.
 - Designing scalable data preprocessing pipelines for mixed-format datasets.
+- Visualizing data and interpreting feature importance to make informed decisions.
 - Analyzing model performance through custom metrics and cross-validation strategies.
 - Applying critical thinking and creativity to solve real-world ML problems.
 
