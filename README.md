@@ -25,9 +25,6 @@ This project focused on solving a multiclass classification problem with an imba
 
 These experiences have strengthened our expertise in end-to-end machine learning workflows and problem-solving in competitive environments.
 
-## Competition Overview
-
-The goal of this competition is to analyze children’s physical activity data and predict their level of problematic internet usage. This initiative is critical in promoting early interventions that encourage healthier digital habits and prevent mental health issues such as anxiety and depression.
 
 # 📊🔍*Data Overview*
 ## Data Source
