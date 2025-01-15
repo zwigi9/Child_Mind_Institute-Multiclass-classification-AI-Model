@@ -1,14 +1,33 @@
-# 🏆📖*Predicting Problematic Internet Usage Based on Physical Activity*
+# 🏆📖*Multiclass classification problem with unbalanced dataset*
 
-Welcome to our GitHub repository for the "Predicting Problematic Internet Usage" competition! This project aims to address a growing concern in today’s digital age — problematic internet use among children and adolescents. By leveraging physical activity and fitness data, we strive to build a predictive model capable of identifying early signs of problematic internet behavior.
+### Introduction
+
+This project focused on solving a multiclass classification problem with an imbalanced dataset, predicting the Severity Impairment Index (SII) (0-3) for individuals based on physical activity and fitness data.
+
+- Goal: Predict SII scores to assess problematic internet usage impacts.
+- Data Handling: Utilized mixed-format datasets (CSV and Parquet), performed feature engineering, and addressed missing values and class imbalance using resampling (SMOTE-Tomek).
+- Modeling:
+  - Developed a custom ensemble approach, training Random Forest, XGBoost, and LightGBM classifiers.
+  - Applied class-specific model selection for optimal performance on individual SII categories.
+  - Evaluated models using Stratified K-Fold cross-validation and weighted F1-scores to ensure robustness.
+- Tools & Techniques:
+  - Designed an end-to-end data preprocessing pipeline using scikit-learn and imbalanced-learn.
+  - Leveraged time-series data preprocessing and feature selection tailored to the problem.
+  - Worked within a Kaggle competition framework, meeting runtime and hardware constraints.
+
+### This project enhanced our skills in:
+
+- Tackling imbalanced classification problems and effectively applying resampling techniques.
+- Building and optimizing ensemble models for multiclass classification tasks.
+- Designing scalable data preprocessing pipelines for mixed-format datasets.
+- Analyzing model performance through custom metrics and cross-validation strategies.
+- Applying critical thinking and creativity to solve real-world ML problems.
+
+These experiences have strengthened our expertise in end-to-end machine learning workflows and problem-solving in competitive environments.
 
 ## Competition Overview
 
 The goal of this competition is to analyze children’s physical activity data and predict their level of problematic internet usage. This initiative is critical in promoting early interventions that encourage healthier digital habits and prevent mental health issues such as anxiety and depression.
-
-## Why This Matters
-
-Traditional methods of measuring problematic internet use often involve complex clinical assessments, which can be inaccessible due to cultural, linguistic, or logistical barriers. On the other hand, physical activity and fitness data are widely available and require minimal intervention, making them ideal proxies for identifying problematic internet use. Excessive technology use often manifests through changes in physical behavior, such as reduced activity levels and poorer posture. By harnessing these indicators, we aim to create scalable solutions to this growing problem.
 
 # 📊🔍*Data Overview*
 ## Data Source
