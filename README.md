@@ -27,6 +27,128 @@ This project focused on solving a multiclass classification problem with an imba
 
 These experiences have strengthened our expertise in end-to-end machine learning workflows and problem-solving in competitive environments.
 
+# 🥇🗿Our Best and Final Attempt
+
+## Data Wrangling and Feature Engineering 🔨
+
+- **Dataset Loading**: We started by importing the training and testing datasets using `pandas.read_csv`, ensuring data integrity for further analysis.
+
+- **Cleaning and Feature Selection**:  
+  - Removed unnecessary columns such as `id` and `Physical-Waist_Circumference` from both the training and testing datasets. 
+  - Dropped rows in the training dataset with missing values in the target column `sii`, as they couldn't contribute to model training.
+
+- **Feature-Target Splitting**:  
+  - Defined features (`X_train`) by removing the target column `sii` from the training dataset.  
+  - Assigned `sii` as the target variable (`y_train`) for supervised learning.
+
+- **Feature Engineering**:  
+  - Merged two related columns (`PAQ_A-PAQ_A_Total` and `PAQ_C-PAQ_C_Total`) into a single composite feature `PAQ_Total`. This step consolidated similar data to reduce dimensionality and improve interpretability.  
+  - Handled missing values in these columns by substituting them with zeros before merging.  
+  - Removed the original columns post-merge to maintain a clean and concise feature set.  
+
+This systematic approach to data wrangling and feature engineering optimized the dataset for robust model training, a critical skill in machine learning workflows.
+
+```python
+train = pd.read_csv(TRAIN_PATH)
+test = pd.read_csv(TEST_PATH)
+
+train = train.drop(columns=['id', 'Physical-Waist_Circumference'])  # Drop unnecessary columns
+train = train.dropna(subset=['sii'])  # Remove rows with missing 'sii' values
+
+# Split the cleaned training data into features (X) and target (y)
+X_train = train.drop(columns=['sii'])
+y_train = train['sii']
+
+# Prepare test set
+X_test = test.drop(columns=['id', 'Physical-Waist_Circumference'])  # Drop unnecessary columns
+
+# Merge PAQ_A-PAQ_A_Total and PAQ_C-PAQ_C_Total in X_train
+if 'PAQ_A-PAQ_A_Total' in X_train.columns and 'PAQ_C-PAQ_C_Total' in X_train.columns:
+    X_train['PAQ_Total'] = X_train['PAQ_A-PAQ_A_Total'].fillna(0) + X_train['PAQ_C-PAQ_C_Total'].fillna(0)
+    X_train = X_train.drop(columns=['PAQ_A-PAQ_A_Total', 'PAQ_C-PAQ_C_Total'])  # Drop the original columns
+
+# Merge PAQ_A-PAQ_A_Total and PAQ_C-PAQ_C_Total in X_test
+if 'PAQ_A-PAQ_A_Total' in X_test.columns and 'PAQ_C-PAQ_C_Total' in X_test.columns:
+    X_test['PAQ_Total'] = X_test['PAQ_A-PAQ_A_Total'].fillna(0) + X_test['PAQ_C-PAQ_C_Total'].fillna(0)
+    X_test = X_test.drop(columns=['PAQ_A-PAQ_A_Total', 'PAQ_C-PAQ_C_Total'])  # Drop the original columns
+```
+## Numerical Data Preprocessing ⚙
+
+- **Column Identification**:  
+  - Determined common columns between the training and testing datasets using `.intersection()`, ensuring consistent feature usage.  
+  - Identified numerical columns based on data types (`int64` and `float64`) and predefined relevant features, removing any mismatched columns for a unified preprocessing pipeline.  
+
+- **Imputation Strategy**:  
+  - Implemented the `SimpleImputer` with a median strategy to handle missing values in numerical columns, effectively reducing bias from outliers.  
+
+- **Pipeline Configuration**:  
+  - Utilized `ColumnTransformer` to apply the imputation only to the selected numerical columns.  
+  - Transformed the training data and restructured it into a new DataFrame with proper column names for clarity and downstream processing.  
+
+- **Test Set Integration**:  
+  - Adjusted the imputer strategy to the mean and applied the preprocessor to both the training and testing datasets, ensuring consistency in handling missing values across datasets.  
+
+This approach highlights our proficiency in preparing datasets for machine learning by seamlessly integrating feature selection, imputation, and column transformations, all while maintaining compatibility between training and testing data.
+
+```python
+common_cols = X_train.columns.intersection(X_test.columns)
+numeric_cols_not_list = X_train.select_dtypes(include=['int64', 'float64']).columns.intersection(X_test.columns)
+numerical_imputer = SimpleImputer(strategy='median')
+
+numeric_cols = [
+    "Physical-Height",
+    "Physical-Weight",
+    "Basic_Demos-Age",
+    "SDS-SDS_Total_Raw",
+    "Physical-BMI",
+    "SDS-SDS_Total_T",
+    "Physical-Systolic_BP",
+    "Physical-HeartRate",
+    "CGAS-CGAS_Score",
+    "PreInt_EduHx-computerinternet_hoursday",
+    "Basic_Demos-Sex",
+    "Physical-Diastolic_BP",
+    'PAQ_Total'
+]
+
+for col in numeric_cols:
+    if col not in numeric_cols_not_list:
+        numeric_cols.remove(col)
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numerical_imputer, numeric_cols),
+    ])
+subset_x_train = X_train[numeric_cols]
+
+X_train = preprocessor.fit_transform(subset_x_train)
+
+# Create the DataFrame with proper column names
+X_train_preprocessed_df = pd.DataFrame(X_train, columns=numeric_cols)
+
+numerical_imputer = SimpleImputer(strategy='mean')
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numerical_imputer, numeric_cols),
+    ])
+
+preprocessor.fit(X_train_preprocessed_df)
+# Transform both training and test sets
+common_cols = X_train_preprocessed_df.columns.intersection(X_test.columns)
+X_train_preprocessed = preprocessor.transform(X_train_preprocessed_df)
+X_test_preprocessed = preprocessor.transform(X_test[numeric_cols])
+```
+
+<table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
+  <tr>
+    <td style="text-align: center; font-family: Arial, sans-serif; font-size: 50;">
+      <img src="https://github.com/user-attachments/assets/7e141746-d572-4e52-96cf-31a1f01f3a97" alt="Icon" style="width: 20px; vertical-align: down; margin-right: 10px;">
+      <b>Final Kaggle Score: 0.423</b>
+    </td>
+  </tr>
+</table>
+
 
 # 📊🔍*Data Overview*
 ## Kaggle Data Source
@@ -408,13 +530,3 @@ test = pd.merge(test, test_ts, how="left", on='id')
 
 **This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/edit/main/README.md#our-first-attempt) + Third Method (this one) of parquet handling.**
 
-# 🥇🗿Our Best and Final Attempt TBC
-
-<table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
-  <tr>
-    <td style="text-align: center; font-family: Arial, sans-serif; font-size: 50;">
-      <img src="https://github.com/user-attachments/assets/7e141746-d572-4e52-96cf-31a1f01f3a97" alt="Icon" style="width: 20px; vertical-align: down; margin-right: 10px;">
-      <b>Final Kaggle Score: 0.402</b>
-    </td>
-  </tr>
-</table>
