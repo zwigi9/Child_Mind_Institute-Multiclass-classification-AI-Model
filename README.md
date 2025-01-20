@@ -31,7 +31,8 @@ These experiences have strengthened our expertise in end-to-end machine learning
 
 ## Data Wrangling and Feature Engineering 🔨
 
-- **Dataset Loading**: We started by importing the training and testing datasets using `pandas.read_csv`, ensuring data integrity for further analysis.
+- **Dataset Loading**:
+  - We started by importing the training and testing datasets using `pandas.read_csv`, ensuring data integrity for further analysis.
 
 - **Cleaning and Feature Selection**:  
   - Removed unnecessary columns such as `id` and `Physical-Waist_Circumference` from both the training and testing datasets. 
@@ -140,8 +141,8 @@ X_train_preprocessed = preprocessor.transform(X_train_preprocessed_df)
 X_test_preprocessed = preprocessor.transform(X_test[numeric_cols])
 ```
 ## Ensemble Modeling and Prediction 🚀
-This section highlights the steps taken to balance the dataset, train multiple machine learning models, and make class-specific predictions using an ensemble approach.
-#### Balancing the Dataset
+These are the steps we took to balance the dataset, train multiple machine learning models, and make class-specific predictions using an ensemble approach.
+### Balancing the Dataset
 To address class imbalance in the training data, SMOTETomek was applied:
 
 ```python
@@ -151,11 +152,14 @@ X_train_resampled, y_train_resampled = smote_tomek.fit_resample(X_train_preproce
 This technique combines SMOTE (Synthetic Minority Over-sampling Technique) and Tomek links to oversample minority classes and clean noisy data.
 
 ### Model Training
-Three machine learning models were employed:
+We used three machine learning models:
 
-Random Forest 🌲
-XGBoost 📈
-LightGBM ⚡
+  - Random Forest 🌲
+
+  - XGBoost 📈
+
+  - LightGBM ⚡
+
 Each model was trained on the balanced dataset:
 ```python
 rf = RandomForestClassifier(random_state=42)
@@ -167,7 +171,7 @@ xgb.fit(X_train_resampled, y_train_resampled)
 lgb.fit(X_train_resampled, y_train_resampled)
 ```
 
-### Custom Prediction Function using ensemble modeling
+### Custom Prediction Function Using Ensemble Modeling
 A custom prediction function was implemented to select the best-performing model for each class:
 ```python
 def class_specific_predict(X, models, best_models_per_class):
@@ -251,6 +255,10 @@ for i, (model_name, color) in enumerate(model_colors.items()):
     )
 ```
 The chart provides a clear visual representation of how each model performs for different classes.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f8af306b-2d1c-452f-8315-71efed7249a3">
+</p>
+
 ### Selecting the Best Models
 The best-performing model for each class was identified based on QWK scores:
 ```python
@@ -262,6 +270,17 @@ print("Best model for each class based on QWK:")
 for class_label, model_name in best_models_per_class_qwk.items():
     print(f"Class {class_label}: {model_name}")
 ```
+
+Console output:
+
+```
+Best model for each class based on QWK:
+Class 0.0: Random Forest
+Class 1.0: Random Forest
+Class 2.0: Random Forest
+Class 3.0: LightGBM
+```
+
 This process ensured that the most suitable model was selected for each class, optimizing predictions for the multi-class classification task. The combination of robust evaluation metrics and intuitive visualization demonstrates a thorough and professional approach to model selection.
 
 <table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
