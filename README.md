@@ -29,7 +29,7 @@ These experiences have strengthened our expertise in end-to-end machine learning
 
 
 # 📊🔍*Data Overview*
-## Data Source
+## Kaggle Data Source
 
 This competition utilizes data provided by the **Healthy Brain Network**, a mental health study conducted by the Child Mind Institute. This initiative is supported by the California Department of Health Care Services.
 The dataset contains data from around 5,000 participants aged 5-22 years, focusing on identifying biological markers for mental health and learning disorders. This competition uses two data types:  
@@ -151,11 +151,11 @@ The goal is to predict the **Severity Impairment Index (SII)**, which measures p
 
 **2. The two BMIs could have been calculated at different ages for the same individual.**
 
-# 1️⃣⚒Our First Attempt
+# 1️⃣⚒Our First Attempt 
 
 Our first target was to make it work, just to have some reference for the future. 
 
-## Handling missing features
+## Handling missing features with sklearn's Simple Imputer
 
 We started with dropping some unnecessery columns, which were: `id`, `sii`(target column) and `Physical-Waist_Circumference` (because it was mostly empty, more than 60%). Then we split the rest into numerical and categorical columns. After that we used SimpleImputer to handle missing data. For the numerical columns it was imputed with `median` value. And for the categorical columns we used `most_frequent` value. 
 
@@ -179,7 +179,7 @@ train[numeric_cols] = numerical_imputer.fit_transform(train[numeric_cols])
 categorical_imputer = SimpleImputer(strategy='most_frequent')
 train[categorical_cols] = categorical_imputer.fit_transform(train[categorical_cols])
 ```
-## Handling missing classes in target column with regressor
+## Handling missing classes in target column with Random Forest Regressor
 
 **We found out that there is a lot of missing classes in target column, around 30%.**
 
@@ -305,7 +305,7 @@ print('Saved to submission.csv')
 </table>
 
 
-# 🧪🔬Further Testing
+# 🧪🔬Further Testing using seaborn
 
 ## Feature Importance Analysis
 After our successful first attempt we wanted to test if we need to use all the columns, so we created a feature importance plot to determine which ones are most important for our model.
@@ -326,7 +326,7 @@ Using the last plot as reference we finally ended up using following columns: `P
 Initially, in our first attempt, we used a `RandomForestRegressor` to impute missing values in the target column `sii` ([here](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/blob/main/README.md#handling-missing-classes-in-target-column-with-regressor)). Later, we considered an alternative approach: simply removing rows with missing `sii` values. After conducting several tests using the same model but handling the missing `sii` differently, we found that the best-performing method was to delete these rows. This approach proved effective, and we stuck to it for the remainder of the project.
 
 ## Parquet Files Adventures
-### First Method
+### First Method using ThreadPoolExecutor
 At first, we struggled with loading the Parquet files because the basic pandas functions couldn’t handle their large size within Kaggle’s runtime limits. After building a few simple models, we revisited the problem and searched online for solutions. We found a code snippet that appeared in multiple competition notebooks, offering a better way to process the time series data in Parquet format.
 
 The snippet introduces a function, `load_time_series`, designed to efficiently handle Parquet files in a directory. It uses `os.listdir` to get the file names and `ThreadPoolExecutor` to process multiple files at the same time. Each file is passed to a helper function, `process_file`, which reads the Parquet file, removes the `step` column, and calculates summary statistics using `df.describe()`. These statistics include useful details about the data, such as how many values are present (count), the average (mean), how spread out the data is (standard deviation), and key percentiles (minimum, 25%, 50%, 75%, and maximum). These numbers give a quick but detailed picture of the data in each file. The statistics are flattened into a single row, and the file ID is extracted from the file name and included with the results.
