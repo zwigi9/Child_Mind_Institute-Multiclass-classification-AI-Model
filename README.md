@@ -139,6 +139,130 @@ common_cols = X_train_preprocessed_df.columns.intersection(X_test.columns)
 X_train_preprocessed = preprocessor.transform(X_train_preprocessed_df)
 X_test_preprocessed = preprocessor.transform(X_test[numeric_cols])
 ```
+## Ensemble Modeling and Prediction 🚀
+This section highlights the steps taken to balance the dataset, train multiple machine learning models, and make class-specific predictions using an ensemble approach.
+#### Balancing the Dataset
+To address class imbalance in the training data, SMOTETomek was applied:
+
+```python
+smote_tomek = SMOTETomek(random_state=42)
+X_train_resampled, y_train_resampled = smote_tomek.fit_resample(X_train_preprocessed, y_train)
+```
+This technique combines SMOTE (Synthetic Minority Over-sampling Technique) and Tomek links to oversample minority classes and clean noisy data.
+
+### Model Training
+Three machine learning models were employed:
+
+Random Forest 🌲
+XGBoost 📈
+LightGBM ⚡
+Each model was trained on the balanced dataset:
+```python
+rf = RandomForestClassifier(random_state=42)
+xgb = XGBClassifier(use_label_encoder=False, eval_metric='mlogloss', random_state=42)
+lgb = LGBMClassifier(random_state=42)
+
+rf.fit(X_train_resampled, y_train_resampled)
+xgb.fit(X_train_resampled, y_train_resampled)
+lgb.fit(X_train_resampled, y_train_resampled)
+```
+
+### Custom Prediction Function using ensemble modeling
+A custom prediction function was implemented to select the best-performing model for each class:
+```python
+def class_specific_predict(X, models, best_models_per_class):
+    class_probabilities = np.zeros((X.shape[0], len(best_models_per_class)))
+    for class_label in best_models_per_class.index:
+        model_name = best_models_per_class[class_label]
+        class_probabilities[:, int(class_label)] = models[model_name].predict_proba(X)[:, int(class_label)]
+    return np.argmax(class_probabilities, axis=1)
+```
+The `best_models_per_class` dictionary specifies the optimal model for each class based on prior evaluation:
+```python
+best_models_per_class = pd.Series({
+    0: 'Random Forest',
+    1: 'Random Forest',
+    2: 'Random Forest',
+    3: 'LightGBM'
+})
+```
+### Making Predictions and Submission
+The custom prediction function was used to generate predictions for the test set:
+```python
+y_test_pred = class_specific_predict(X_test_preprocessed, models, best_models_per_class)
+```
+Finally, predictions were saved in the required submission format:
+```python
+submission_df = pd.DataFrame({
+    'id': test['id'],  # Correct IDs from the test data
+    'sii': y_test_pred
+})
+submission_df['sii'] = submission_df['sii'].astype(int)
+submission_df.to_csv('submission.csv', index=False)
+print("Saved to submission.csv")
+```
+This pipeline demonstrates the application of advanced ensemble modeling techniques, addressing class imbalance, and creating a robust prediction workflow for a multi-class classification task.
+
+## Model Evaluation and Selection 🏆
+This section outlines the evaluation of machine learning models using Quadratic Weighted Kappa (QWK), a metric that measures agreement between predicted and actual class labels (the evaluation method used in this Kaggle competition) , and the subsequent selection of the best model for each class.
+
+### Validation Split
+The resampled training data was split into training and validation sets to ensure robust evaluation:
+```python
+X_train_final, X_val, y_train_final, y_val = train_test_split(
+    X_train_resampled, y_train_resampled, test_size=0.2, random_state=42
+)
+```
+### QWK Performance Evaluation
+Each model was trained on the final training set, and predictions were compared against validation labels to compute QWK scores for each class:
+```python
+for model_name, model in models.items():
+    model.fit(X_train_final, y_train_final)
+    y_pred = model.predict(X_val)
+    for class_label in np.unique(y_val):
+        qwk = cohen_kappa_score(
+            (y_val == class_label).astype(int),
+            (y_pred == class_label).astype(int),
+            weights="quadratic"
+        )
+        performance_per_class_qwk[model_name][class_label] = qwk
+```
+The QWK scores were organized into a DataFrame for better visualization:
+```python
+performance_df_qwk = pd.DataFrame(performance_per_class_qwk).T
+performance_df_qwk = performance_df_qwk.T
+```
+### Visualizing Performance
+To compare model performance across classes, a grouped column chart was created:
+```python
+fig, ax = plt.subplots(figsize=(10, 6))
+bar_width = 0.25
+x = np.arange(len(performance_df_qwk.index))  # Class positions
+
+# Plot each model's performance
+for i, (model_name, color) in enumerate(model_colors.items()):
+    ax.bar(
+        x + i * bar_width,
+        performance_df_qwk[model_name],
+        bar_width,
+        label=model_name,
+        color=color,
+        alpha=0.8
+    )
+```
+The chart provides a clear visual representation of how each model performs for different classes.
+### Selecting the Best Models
+The best-performing model for each class was identified based on QWK scores:
+```python
+best_models_per_class_qwk = performance_df_qwk.idxmax(axis=1)
+```
+The results were printed for reference:
+```python
+print("Best model for each class based on QWK:")
+for class_label, model_name in best_models_per_class_qwk.items():
+    print(f"Class {class_label}: {model_name}")
+```
+This process ensured that the most suitable model was selected for each class, optimizing predictions for the multi-class classification task. The combination of robust evaluation metrics and intuitive visualization demonstrates a thorough and professional approach to model selection.
 
 <table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
   <tr>
