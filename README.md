@@ -654,7 +654,7 @@ test = pd.merge(test, test_ts, how="left", on='id')
   </tr>
 </table>
 
-**This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/edit/main/README.md#our-first-attempt) + First Method (this one) of parquet handling.**
+**This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/tree/main#1%EF%B8%8F%E2%83%A3our-first-attempt) + First Method (this one) of parquet handling.**
 
 ### Second Method TBC
 
@@ -667,7 +667,7 @@ test = pd.merge(test, test_ts, how="left", on='id')
   </tr>
 </table>
 
-**This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/edit/main/README.md#our-first-attempt) + Second Method (this one) of parquet handling.**
+**This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/tree/main#1%EF%B8%8F%E2%83%A3our-first-attempt) + Second Method (this one) of parquet handling.**
 
 
 
