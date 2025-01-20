@@ -29,6 +29,24 @@ These experiences have strengthened our expertise in end-to-end machine learning
 
 # 🥇🗿Our Best and Final Attempt
 
+<table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
+  <tr>
+    <td style="text-align: center; font-family: Arial, sans-serif; font-size: 50;">
+      <img src="https://github.com/user-attachments/assets/7e141746-d572-4e52-96cf-31a1f01f3a97" alt="Icon" style="width: 20px; vertical-align: down; margin-right: 10px;">
+      <b>Our Final Kaggle Score: 0.423</b>
+    </td>
+  </tr>
+</table>
+
+<table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
+  <tr>
+    <td style="text-align: center; font-family: Arial, sans-serif; font-size: 50;">
+      <img src="https://github.com/user-attachments/assets/7e141746-d572-4e52-96cf-31a1f01f3a97" alt="Icon" style="width: 20px; vertical-align: down; margin-right: 10px;">
+      <b>1<sup>st</sup> Place Kaggle Score: 0.482</b>
+    </td>
+  </tr>
+</table>
+
 ## 🔨 Data Wrangling and Feature Engineering
 
 - **Dataset Loading**:
@@ -282,15 +300,6 @@ Class 3.0: LightGBM
 ```
 
 This process ensured that the most suitable model was selected for each class, optimizing predictions for the multi-class classification task. The combination of robust evaluation metrics and intuitive visualization demonstrates a thorough and professional approach to model selection.
-
-<table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
-  <tr>
-    <td style="text-align: center; font-family: Arial, sans-serif; font-size: 50;">
-      <img src="https://github.com/user-attachments/assets/7e141746-d572-4e52-96cf-31a1f01f3a97" alt="Icon" style="width: 20px; vertical-align: down; margin-right: 10px;">
-      <b>Final Kaggle Score: 0.423</b>
-    </td>
-  </tr>
-</table>
 
 
 # 📊🔍*Data Overview*
