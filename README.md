@@ -669,16 +669,5 @@ test = pd.merge(test, test_ts, how="left", on='id')
 
 **This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/edit/main/README.md#our-first-attempt) + Second Method (this one) of parquet handling.**
 
-### Third Method TBC
 
-<table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
-  <tr>
-    <td style="text-align: center; font-family: Arial, sans-serif; font-size: 50;">
-      <img src="https://github.com/user-attachments/assets/7e141746-d572-4e52-96cf-31a1f01f3a97" alt="Icon" style="width: 20px; vertical-align: down; margin-right: 10px;">
-      <b>Current Kaggle Score: NaN</b>
-    </td>
-  </tr>
-</table>
-
-**This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/edit/main/README.md#our-first-attempt) + Third Method (this one) of parquet handling.**
 
