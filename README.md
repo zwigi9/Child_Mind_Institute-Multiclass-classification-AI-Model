@@ -69,7 +69,7 @@ The goal is to predict the **Severity Impairment Index (SII)**, which measures p
 - **Missing Data**: Many fields are missing for some participants, including the target SII in parts of the training set.  
 - **Test Set**: The test set (hidden during the competition) contains around 3,800 instances, with complete SII values.
 
-## **Data visualization and analysis**
+## **Data visualization and analysis using matplotlib**
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/7f56ae4f-ca94-4a85-a51f-7eeb20c88d7a">
