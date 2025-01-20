@@ -29,7 +29,7 @@ These experiences have strengthened our expertise in end-to-end machine learning
 
 # 🥇🗿Our Best and Final Attempt
 
-## Data Wrangling and Feature Engineering 🔨
+## 🔨 Data Wrangling and Feature Engineering
 
 - **Dataset Loading**:
   - We started by importing the training and testing datasets using `pandas.read_csv`, ensuring data integrity for further analysis.
@@ -73,7 +73,7 @@ if 'PAQ_A-PAQ_A_Total' in X_test.columns and 'PAQ_C-PAQ_C_Total' in X_test.colum
     X_test['PAQ_Total'] = X_test['PAQ_A-PAQ_A_Total'].fillna(0) + X_test['PAQ_C-PAQ_C_Total'].fillna(0)
     X_test = X_test.drop(columns=['PAQ_A-PAQ_A_Total', 'PAQ_C-PAQ_C_Total'])  # Drop the original columns
 ```
-## Numerical Data Preprocessing ⚙
+## ⚙ Numerical Data Preprocessing
 
 - **Column Identification**:  
   - Determined common columns between the training and testing datasets using `.intersection()`, ensuring consistent feature usage.  
@@ -140,7 +140,7 @@ common_cols = X_train_preprocessed_df.columns.intersection(X_test.columns)
 X_train_preprocessed = preprocessor.transform(X_train_preprocessed_df)
 X_test_preprocessed = preprocessor.transform(X_test[numeric_cols])
 ```
-## Ensemble Modeling and Prediction 🚀
+## 🚀 Ensemble Modeling and Prediction
 These are the steps we took to balance the dataset, train multiple machine learning models, and make class-specific predictions using an ensemble approach.
 ### Balancing the Dataset
 To address class imbalance in the training data, SMOTETomek was applied:
@@ -154,11 +154,11 @@ This technique combines SMOTE (Synthetic Minority Over-sampling Technique) and T
 ### Model Training
 We used three machine learning models:
 
-  - Random Forest 🌲
+  - 🌲 Random Forest
 
-  - XGBoost 📈
+  - 📈 XGBoost
 
-  - LightGBM ⚡
+  - ⚡ LightGBM
 
 Each model was trained on the balanced dataset:
 ```python
@@ -207,7 +207,7 @@ print("Saved to submission.csv")
 ```
 This pipeline demonstrates the application of advanced ensemble modeling techniques, addressing class imbalance, and creating a robust prediction workflow for a multi-class classification task.
 
-## Model Evaluation and Selection 🏆
+## 🏆 Model Evaluation and Selection
 This section outlines the evaluation of machine learning models using Quadratic Weighted Kappa (QWK), a metric that measures agreement between predicted and actual class labels (the evaluation method used in this Kaggle competition) , and the subsequent selection of the best model for each class.
 
 ### Validation Split
