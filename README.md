@@ -645,6 +645,8 @@ time_series_cols.remove("id")
 train = pd.merge(train, train_ts, how="left", on='id')
 test = pd.merge(test, test_ts, how="left", on='id')
 ```
+*This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/tree/main#1%EF%B8%8F%E2%83%A3our-first-attempt) + First Method (this one) of parquet handling.*
+
 <table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
   <tr>
     <td style="text-align: center; font-family: Arial, sans-serif; font-size: 50;">
@@ -654,20 +656,128 @@ test = pd.merge(test, test_ts, how="left", on='id')
   </tr>
 </table>
 
-**This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/tree/main#1%EF%B8%8F%E2%83%A3our-first-attempt) + First Method (this one) of parquet handling.**
 
 ### Second Method TBC
+
+This method focuses on extracting descriptive statistics, trends, and higher-order moments like skewness and kurtosis, which provide deeper insights into the data's distribution.
+
+We started by defining a set of numeric columns, such as `X`, `Y`, `Z`, `enmo`, `anglez`, and `light`, from which we wanted to extract features. These columns were grouped by the time_of_day field, enabling us to calculate detailed metrics for each time segment. For each group, we computed summary statistics such as the mean, standard deviation, minimum, maximum, skewness, and kurtosis, ensuring a rich feature set for our models.
+
+To enhance computational efficiency, we processed all desired statistics in a single group-by operation. Additional features like the trend of the light column were calculated using linear regression when applicable, capturing patterns over time. To ensure that the extracted features were compact and meaningful, we filtered the results to include only metrics with specific suffixes, such as `skew`, `kurtosis`, `mean_over_times`, `std_over_times`, `min_over_times`, `max_over_times`, `trend`.
+
+Our implementation also tackled the challenge of processing multiple Parquet files within Kaggle's runtime constraints. Using a combination of `os.walk` and `tqdm`, we iterated through all files in a directory, applying our feature extraction pipeline to each one. The extracted features for each patient were aggregated into a DataFrame, saved incrementally to prevent memory issues, and merged with the primary datasets (`train.csv`, `test.csv`) for further analysis.
+
+The result was a compact, yet informative, dataset ready for machine learning models. By including advanced metrics like skewness and kurtosis, this method provided a deeper understanding of the data, contributing to better model performance.
+
+```python
+import os
+import pandas as pd
+import numpy as np
+from scipy.stats import skew, kurtosis
+from tqdm import tqdm
+
+# Define the numeric columns used for feature extraction
+numeric_columns = ["X", "Y", "Z", "enmo", "anglez", "light"]
+
+# Desired suffixes for feature selection
+desired_suffixes = [
+    "skew", "kurtosis", "mean_over_times", "std_over_times", 
+    "min_over_times", "max_over_times", "trend"
+]
+
+def compute_patient_features(patient_data, patient_id):
+    patient_features = {"id": patient_id}
+
+    # Groupby operation performed only once
+    daily_data = patient_data.groupby("time_of_day")[numeric_columns].agg(['mean', 'std', 'min', 'max'])
+    daily_data.columns = ['_'.join(col).strip() for col in daily_data.columns.values]
+
+    # Efficient computation of skew and kurtosis
+    for col in numeric_columns:
+        patient_features[f"{col}_skew"] = skew(patient_data[col], nan_policy="omit")
+        patient_features[f"{col}_kurtosis"] = kurtosis(patient_data[col], nan_policy="omit")
+
+    # Aggregating features over times without repeating groupby
+    for col in daily_data.columns:
+        patient_features[f"{col}_mean_over_times"] = daily_data[col].mean()
+        patient_features[f"{col}_std_over_times"] = daily_data[col].std()
+        patient_features[f"{col}_min_over_times"] = daily_data[col].min()
+        patient_features[f"{col}_max_over_times"] = daily_data[col].max()
+
+    # Only compute light trend if light column exists
+    if "light" in patient_data.columns:
+        light_means_per_time = patient_data.groupby("time_of_day")["light"].mean()
+        patient_features["light_trend"] = np.polyfit(range(len(light_means_per_time)), light_means_per_time, 1)[0] if len(light_means_per_time) > 1 else 0
+
+    # Filter to only desired features
+    patient_features = {key: value for key, value in patient_features.items() if key == "id" or any(key.endswith(suffix) for suffix in desired_suffixes)}
+
+    return patient_features
+
+def process_and_save_file(file_path, output_file):
+    # Read the data
+    data = pd.read_parquet(file_path)
+    patient_id = file_path.split('/')[-2].split('=')[-1]
+    data['id'] = patient_id
+    data = data[data["non-wear_flag"] == 0]
+    
+    # Simplify the time_of_day calculation
+    data['time_of_day'] = ((data['time_of_day'] // 60000000000) % 1440).astype(int)  # Get minutes of the day
+
+    # Process patients
+    patient_ids = data["id"].unique()
+    patient_aggregations = []
+    
+    with tqdm(total=len(patient_ids), desc=f"Processing {os.path.basename(file_path)}", unit="patient") as pbar:
+        for patient_id in patient_ids:
+            patient_data = data[data["id"] == patient_id]
+            patient_features = compute_patient_features(patient_data, patient_id)
+            patient_aggregations.append(patient_features)
+            pbar.update(1)
+    
+    aggregated_features = pd.DataFrame(patient_aggregations)
+    aggregated_features.fillna(0, inplace=True)
+    
+    # Append results to the CSV file
+    aggregated_features.to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
+
+def load_and_process_directory(parquet_dir, output_file):
+    # Iterate over files in the directory, processing each one and appending the results to the CSV file
+    with tqdm(total=len(os.listdir(parquet_dir)), desc="Reading Parquet Files", unit="file") as pbar:
+        for root, dirs, files in os.walk(parquet_dir):
+            for file in files:
+                if file.endswith('.parquet'):
+                    file_path = os.path.join(root, file)
+                    process_and_save_file(file_path, output_file)
+                    pbar.update(1)
+
+# Paths
+train_parquet_dir = "/kaggle/input/child-mind-institute-problematic-internet-use/series_train.parquet"
+test_parquet_dir = "/kaggle/input/child-mind-institute-problematic-internet-use/series_test.parquet"
+output_file = "/kaggle/working/results.csv"  # Path to save the results
+
+# Process train and test files
+print("Processing train files...")
+load_and_process_directory(train_parquet_dir, output_file)
+
+print("Processing test files...")
+load_and_process_directory(test_parquet_dir, output_file)
+
+print("Processing complete!")
+```
+
+*This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/tree/main#1%EF%B8%8F%E2%83%A3our-first-attempt) + Second Method (this one) of parquet handling.*
 
 <table style="border-collapse: collapse; border: 1px solid black; border-radius: 15px; background-color: #cce7ff; padding: 5px;">
   <tr>
     <td style="text-align: center; font-family: Arial, sans-serif; font-size: 50;">
       <img src="https://github.com/user-attachments/assets/7e141746-d572-4e52-96cf-31a1f01f3a97" alt="Icon" style="width: 20px; vertical-align: down; margin-right: 10px;">
-      <b>Current Kaggle Score: NaN</b>
+      <b>Current Kaggle Score: 0.180</b>
     </td>
   </tr>
 </table>
 
-**This version uses code from the [First Attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/tree/main#1%EF%B8%8F%E2%83%A3our-first-attempt) + Second Method (this one) of parquet handling.**
+This way of handling parque files gave us better result, but when used with our [best attempt](https://github.com/zwigi9/Child_Mind_Institute-Multiclass-classification-AI-Model/tree/main#our-best-and-final-attempt) code  it scored significantly lower, so we decided not to use them.
 
 
 
