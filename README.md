@@ -1,5 +1,9 @@
-# 🏆📖*Multiclass classification problem with unbalanced dataset*
+# 🏆📖*Machine Learning Challenges: Addressing Heterogeneous Data Formats, Missing Labels, and Unbalanced Data*
+**This is a review of our approach to solve Child's Mind Institue competition on Kaggle.**
 
+*https://www.kaggle.com/competitions/child-mind-institute-problematic-internet-use*
+
+*Autors: Adam Tokarski, Maksymilian Wiciński*
 ### ⭐ Introduction
 
 This project focused on solving a multiclass classification problem with an imbalanced dataset, predicting the Severity Impairment Index (SII) (0-3) for individuals based on physical activity and fitness data.
@@ -18,14 +22,14 @@ This project focused on solving a multiclass classification problem with an imba
 
 ### 🎓 This project enhanced our skills in:
 
+- Building, testing and picking the best ensemble models for multiclass classification tasks.
 - Tackling imbalanced classification problems and effectively applying resampling techniques.
-- Building and optimizing ensemble models for multiclass classification tasks.
-- Designing scalable data preprocessing pipelines for mixed-format datasets.
-- Visualizing data and interpreting feature importance to make informed decisions.
 - Analyzing model performance through custom metrics and cross-validation strategies.
+- Designing versatile data preprocessing pipelines for mixed-format datasets.
+- Visualizing data and interpreting feature importance to make informed decisions.
 - Applying critical thinking and creativity to solve real-world ML problems.
 
-These experiences have strengthened our expertise in end-to-end machine learning workflows and problem-solving in competitive environments.
+These experiences have honed our expertise in analyzing machine learning behaviors and developing effective solutions in competitive settings.
 
 # 🥇🗿Our Best and Final Attempt
 
@@ -49,16 +53,13 @@ These experiences have strengthened our expertise in end-to-end machine learning
 
 ## 🔨 Data Wrangling and Feature Engineering
 
-- **Dataset Loading**:
-  - We started by importing the training and testing datasets using `pandas.read_csv`, ensuring data integrity for further analysis.
+- **Dataset Loading**
 
-- **Cleaning and Feature Selection**:  
-  - Removed unnecessary columns such as `id` and `Physical-Waist_Circumference` from both the training and testing datasets. 
+- **Feature Selection**: 
+  - Removed unnecessary columns such as `id` and `Physical-Waist_Circumference` (70% data missing) from both the training and testing datasets. 
   - Dropped rows in the training dataset with missing values in the target column `sii`, as they couldn't contribute to model training.
 
-- **Feature-Target Splitting**:  
-  - Defined features (`X_train`) by removing the target column `sii` from the training dataset.  
-  - Assigned `sii` as the target variable (`y_train`) for supervised learning.
+- **Splitting into `X_train` (features) and `y_train` (target)**
 
 - **Feature Engineering**:  
   - Merged two related columns (`PAQ_A-PAQ_A_Total` and `PAQ_C-PAQ_C_Total`) into a single composite feature `PAQ_Total`. This step consolidated similar data to reduce dimensionality and improve interpretability.  
@@ -95,7 +96,8 @@ if 'PAQ_A-PAQ_A_Total' in X_test.columns and 'PAQ_C-PAQ_C_Total' in X_test.colum
 
 - **Column Identification**:  
   - Determined common columns between the training and testing datasets using `.intersection()`, ensuring consistent feature usage.  
-  - Identified numerical columns based on data types (`int64` and `float64`) and predefined relevant features, removing any mismatched columns for a unified preprocessing pipeline.  
+  - Identified numerical columns based on data types (`int64` and `float64`) and predefined relevant features, removing any mismatched columns for a unified preprocessing pipeline.
+  - Used columns highlighted on the Feature Importance Plot.
 
 - **Imputation Strategy**:  
   - Implemented the `SimpleImputer` with a median strategy to handle missing values in numerical columns, effectively reducing bias from outliers.  
@@ -374,20 +376,6 @@ The goal is to predict the **Severity Impairment Index (SII)**, which measures p
 
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/801531fa-da07-4acd-aa48-9f4997acd1b6">
-</p>
-
-**Here, we have a scatter plot for our target variable, SII, and the number of hours of internet usage. While the plot is interesting, it is also somewhat perplexing. It shows that all possible SII values are present across all ranges of internet usage hours per day, making it difficult to discern how the SII value changes with varying internet usage time. A potential solution to better understand this relationship would be to include a count of computer/internet users along with the SII and internet usage hours per day. This could help clarify the distribution and trend.**
-
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/c98d11c5-1112-4b82-8573-50778307f71e">
-</p>
-
-**In the above chart, we have the SII, PreInt_EduHx-computerinternet_hoursday, and the count of PreInt_EduHx-computerinternet_hoursday. These three variables together provide a more comprehensive understanding of the data compared to the previous chart, which only used two features. By incorporating the count, we can better visualize and interpret the relationship between internet usage hours, educational history, and the severity of impairment.**
-
-
-<p align="center">
   <img src="https://github.com/user-attachments/assets/6a5e95dd-7353-44bc-ac34-5b2753dd96bc">
 </p>
 
@@ -406,13 +394,6 @@ The goal is to predict the **Severity Impairment Index (SII)**, which measures p
 </p>
 
 **The scatter plot above shows that the Sleep Disturbance Scale values for individuals with SII scores of 0, 1, and 2 fall within a similar range, with only a few outliers. For SII 3, we observe fewer entries, which can explain the smaller number of marks/dots in that section of the plot. However, even though there are fewer dots for SII 3, they still lie within the same range as those for SII 0, 1, and 2. The range for SII 3 is smaller compared to SII 0, 1, and 2, but I refer to it as the "same range" because there aren't a significant number of points outside the range of the other SII scores. A surprising finding is that for SII 3, we don't observe very high or very low sleep disturbance values. Ideally, we would expect SII 3 to correspond to higher sleep disturbance scores, but this isn't reflected in the data.**
-
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/a1efdbec-6298-48e6-836e-9ad1416c8139">
-</p>
-
-**The violin plot illustrates the distribution of data points, showing that the majority of points fall within the sleep disturbance scale range of 30 to 50. This distribution appears quite similar for SII values of 0, 1, and 2. However, for SII value 3, the data points seem slightly fewer compared to those for SII values 0, 1, and 2.**
 
 
 <p align="center">
