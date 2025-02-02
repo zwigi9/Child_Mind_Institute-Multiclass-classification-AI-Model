@@ -3,7 +3,7 @@
 
 *https://www.kaggle.com/competitions/child-mind-institute-problematic-internet-use*
 
-*Autors: Adam Tokarski, Maksymilian Wiciński*
+*Authors: Adam Tokarski, Maksymilian Wiciński*
 ### ⭐ Introduction
 
 This project focused on solving a multiclass classification problem with an imbalanced dataset, predicting the Severity Impairment Index (SII) (0-3) for individuals based on physical activity and fitness data.
